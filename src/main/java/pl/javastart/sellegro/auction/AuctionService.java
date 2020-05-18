@@ -52,7 +52,6 @@ public class AuctionService {
             LocalDate endDate = LocalDate.parse(data[5]);
             Auction auction = new Auction(id, title, data[1], data[2], data[3], price, endDate);
             auctionRepository.save(auction);
-
         }
     }
 
@@ -72,20 +71,16 @@ public class AuctionService {
     }
 
     public List<Auction> findAllSorted(String sort) {
-        Comparator<Auction> comparator = Comparator.comparing(Auction::getTitle);
-        if (sort.equals("title")) {
-            return auctionRepository.findAllByOrderByTitleAsc();
-        } else if (sort.equals("price")) {
-            return auctionRepository.findAllByOrderByPriceAsc();
-        } else if (sort.equals("color")) {
-            return auctionRepository.findAllByOrderByColorAsc();
-        } else if (sort.equals("endDate")) {
-            return auctionRepository.findAllByOrderByEndDateAsc();
+        switch (sort) {
+            case "title":
+                return auctionRepository.findAllByOrderByTitleAsc();
+            case "price":
+                return auctionRepository.findAllByOrderByPriceAsc();
+            case "color":
+                return auctionRepository.findAllByOrderByColorAsc();
+            case "endDate":
+                return auctionRepository.findAllByOrderByEndDateAsc();
         }
-
-
-        return auctionRepository.findAll().stream()
-                .sorted(comparator)
-                .collect(Collectors.toList());
+        return auctionRepository.findAllByOrderByTitleAsc();
     }
 }

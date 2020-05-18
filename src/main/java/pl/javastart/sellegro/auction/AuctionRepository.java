@@ -15,5 +15,4 @@ public interface AuctionRepository extends JpaRepository<Auction, Long> {
     List<Auction> findAllByOrderByColorAsc();
 
     List<Auction> findAllByOrderByEndDateAsc();
-
 }
